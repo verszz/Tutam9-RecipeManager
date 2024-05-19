@@ -5,6 +5,7 @@ function RecipeForm() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
   const [ingredients, setIngredients] = useState('');
   const [instructions, setInstructions] = useState('');
   const [imageUrl, setImageUrl] = useState('');
@@ -16,6 +17,7 @@ function RecipeForm() {
         .then((response) => response.json())
         .then((data) => {
           setTitle(data.title);
+          setDescription(data.description);
           setIngredients(data.ingredients);
           setInstructions(data.instructions);
           setImageUrl(data.image_url);
@@ -33,7 +35,7 @@ function RecipeForm() {
     fetch(url, {
       method,
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title, ingredients, instructions, image_url: imageUrl }),
+      body: JSON.stringify({ title, description, ingredients, instructions, image_url: imageUrl }),
     }).then(() => {
       navigate('/');
     });
@@ -50,6 +52,16 @@ function RecipeForm() {
             style={{ backgroundColor: 'lightblue', border: '2px solid blue', padding: '8px' }}
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">Description</label>
+          <input
+            type="text"
+            style={{ backgroundColor: 'lightblue', border: '2px solid blue', padding: '8px' }}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>

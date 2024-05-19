@@ -7,7 +7,6 @@ function RecipeList() {
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [recipesPerPage] = useState(6);
-  
 
   useEffect(() => {
     fetch('http://localhost:5000/recipes')
@@ -40,10 +39,11 @@ function RecipeList() {
         <h1 className="text-3xl font-bold mb-4"></h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentRecipes.map((recipe) => (
-            <Link to={`/recipes/${recipe.id}`} key={recipe.id}>
-              <div
-                className="bg-white border rounded-lg overflow-hidden shadow-lg transition-transform transition-shadow duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl h-full" 
-              >
+            <div
+              key={recipe.id}
+              className="bg-white border rounded-lg overflow-hidden shadow-lg transition-transform transition-shadow duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl h-full"
+            >
+              <Link to={`/recipes/${recipe.id}`} className="block">
                 {recipe.image_url && (
                   <img src={recipe.image_url} alt={recipe.title} className="w-full h-50 object-cover" />
                 )}
@@ -59,17 +59,25 @@ function RecipeList() {
                       <li>...</li>
                     )}
                   </ul>
-                  <div className="flex mt-4 justify-between">
-                    <Link to={`/edit/${recipe.id}`} className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105">
-                      Edit
-                    </Link>
-                    <button onClick={() => handleDelete(recipe.id)} className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                      Delete
-                    </button>
-                  </div>
+                </div>
+              </Link>
+              <div className="p-4">
+                <div className="flex mt-4 justify-between">
+                  <Link to={`/edit/${recipe.id}`} className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition duration-300 ease-in-out transform hover:scale-105">
+                    Edit
+                  </Link>
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDelete(recipe.id);
+                    }}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
-            </Link>
+            </div>
           ))}
         </div>
         <div className="mt-8 flex justify-center items-center">
@@ -78,9 +86,7 @@ function RecipeList() {
               <button
                 onClick={() => paginate(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`bg-gray-200 text-black px-4 py-2 rounded-l focus:outline-none ${
-                  currentPage === 1 && 'cursor-not-allowed bg-slate-600'
-                }`}
+                className={`bg-gray-200 text-black px-4 py-2 rounded-l focus:outline-none ${currentPage === 1 && 'cursor-not-allowed bg-slate-600'}`}
               >
                 Previous
               </button>
@@ -91,9 +97,7 @@ function RecipeList() {
                   <span
                     key={pageNumber}
                     onClick={() => paginate(pageNumber + 1)}
-                    className={`cursor-pointer px-4 py-2 mx-1 bg-gray-200 rounded text-black hover:bg-gray-300 ${
-                      pageNumber + 1 === currentPage ? 'bg-gray-600' : 'hover:bg-gray-300'
-                    }`}
+                    className={`cursor-pointer px-4 py-2 mx-1 bg-gray-200 rounded text-black hover:bg-gray-300 ${pageNumber + 1 === currentPage ? 'bg-gray-600' : 'hover:bg-gray-300'}`}
                   >
                     {pageNumber + 1}
                   </span>
@@ -104,9 +108,7 @@ function RecipeList() {
               <button
                 onClick={() => paginate(currentPage + 1)}
                 disabled={indexOfLastRecipe >= filteredRecipes.length}
-                className={`bg-gray-200 text-black px-4 py-2 rounded-r focus:outline-none ${
-                  indexOfLastRecipe >= filteredRecipes.length && 'cursor-not-allowed bg-slate-600'
-                }`}
+                className={`bg-gray-200 text-black px-4 py-2 rounded-r focus:outline-none ${indexOfLastRecipe >= filteredRecipes.length && 'cursor-not-allowed bg-slate-600'}`}
               >
                 Next
               </button>

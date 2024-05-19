@@ -20,14 +20,14 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { title, ingredients, instructions, image_url } = req.body;
-  const newRecipe = await createRecipe(title, ingredients, instructions, image_url);
+  const { title, ingredients, description, instructions, image_url } = req.body;
+  const newRecipe = await createRecipe(title, description, ingredients, instructions, image_url);
   res.json(newRecipe);
 });
 
 router.put('/:id', async (req, res) => {
-  const { title, ingredients, instructions, image_url } = req.body;
-  const updatedRecipe = await updateRecipe(req.params.id, title, ingredients, instructions, image_url);
+  const { title, description, ingredients, instructions, image_url } = req.body;
+  const updatedRecipe = await updateRecipe(req.params.id, title, description, ingredients, instructions, image_url);
   res.json(updatedRecipe);
 });
 
