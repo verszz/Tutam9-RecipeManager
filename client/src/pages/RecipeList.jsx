@@ -31,14 +31,13 @@ function RecipeList() {
   const indexOfFirstRecipe = indexOfLastRecipe - recipesPerPage;
   const currentRecipes = filteredRecipes.slice(indexOfFirstRecipe, indexOfLastRecipe);
 
- 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
     <div>
       <Navbar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      <div className="container mx-auto p-4 relative" style={{ marginTop: '80px' }}>
-        <h1 className="text-3xl font-bold mb-4">Recipes List</h1>
+      <div className="container mx-auto p-4 relative" style={{ marginTop: '100px' }}>
+        <h1 className="text-3xl font-bold mb-4"></h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {currentRecipes.map((recipe) => (
             <Link to={`/recipes/${recipe.id}`} key={recipe.id}>
@@ -74,47 +73,46 @@ function RecipeList() {
           ))}
         </div>
         <div className="mt-8 flex justify-center items-center">
-  <ul className="flex">
-    <li className="mr-3">
-      <button
-        onClick={() => paginate(currentPage - 1)}
-        disabled={currentPage === 1}
-        className={`bg-gray-200 text-black px-4 py-2 rounded-l focus:outline-none ${
-          currentPage === 1 && 'cursor-not-allowed bg-slate-600'
-        }`}
-      >
-        Previous
-      </button>
-    </li>
-    {filteredRecipes.length > recipesPerPage && (
-      <li className="mr-3">
-        {[...Array(Math.ceil(filteredRecipes.length / recipesPerPage)).keys()].map((pageNumber) => (
-          <span
-            key={pageNumber}
-            onClick={() => paginate(pageNumber + 1)}
-            className={`cursor-pointer px-4 py-2 mx-1 bg-gray-200 rounded text-black hover:bg-gray-300 ${
-              pageNumber + 1 === currentPage ? 'bg-gray-600' : 'hover:bg-gray-300'
-            }`}
-          >
-            {pageNumber + 1}
-          </span>
-        ))}
-      </li>
-    )}
-    <li>
-      <button
-        onClick={() => paginate(currentPage + 1)}
-        disabled={indexOfLastRecipe >= filteredRecipes.length}
-        className={`bg-gray-200 text-black px-4 py-2 rounded-r focus:outline-none ${
-          indexOfLastRecipe >= filteredRecipes.length && 'cursor-not-allowed bg-slate-600'
-        }`}
-      >
-        Next
-      </button>
-    </li>
-  </ul>
-</div>
-
+          <ul className="flex">
+            <li className="mr-3">
+              <button
+                onClick={() => paginate(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`bg-gray-200 text-black px-4 py-2 rounded-l focus:outline-none ${
+                  currentPage === 1 && 'cursor-not-allowed bg-slate-600'
+                }`}
+              >
+                Previous
+              </button>
+            </li>
+            {filteredRecipes.length > recipesPerPage && (
+              <li className="mr-3">
+                {[...Array(Math.ceil(filteredRecipes.length / recipesPerPage)).keys()].map((pageNumber) => (
+                  <span
+                    key={pageNumber}
+                    onClick={() => paginate(pageNumber + 1)}
+                    className={`cursor-pointer px-4 py-2 mx-1 bg-gray-200 rounded text-black hover:bg-gray-300 ${
+                      pageNumber + 1 === currentPage ? 'bg-gray-600' : 'hover:bg-gray-300'
+                    }`}
+                  >
+                    {pageNumber + 1}
+                  </span>
+                ))}
+              </li>
+            )}
+            <li>
+              <button
+                onClick={() => paginate(currentPage + 1)}
+                disabled={indexOfLastRecipe >= filteredRecipes.length}
+                className={`bg-gray-200 text-black px-4 py-2 rounded-r focus:outline-none ${
+                  indexOfLastRecipe >= filteredRecipes.length && 'cursor-not-allowed bg-slate-600'
+                }`}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
         <Link to="/new" className="bg-green-500 text-white px-4 py-2 rounded fixed bottom-4 right-4 hover:bg-green-600 focus:outline-none focus:shadow-outline">
           Add New Recipe
         </Link>
